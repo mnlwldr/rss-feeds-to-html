@@ -19,9 +19,15 @@ type Item struct {
 }
 
 func main() {
+
+	if len(os.Args) < 2 {
+		fmt.Println("Please specify the input file as the first parameter")
+		os.Exit(1)
+	}
+
 	ordered := make(map[string][]Item)
 
-	file, err := os.Open("urls")
+	file, err := os.Open(os.Args[1])
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -68,11 +74,13 @@ func main() {
 			fmt.Printf("<div class=\"item\"><div class=\"link\"><a href=\"%s\" rel=\"noopener nofollow noreferrer\" target=\"_blank\" title=\"%s\">%s</a></div><div class=\"source\">%s</div></div>", item.Link, item.Title, item.Title, item.Source)
 		}
 	}
+	footer()
 }
 
 func header() {
 	const HEADER = `<!doctype html><html lang="en"><head><title>RSS Feeds</title><meta name="viewport" content="width=device-width" />
-	<style>a, a:visited { color: #000;padding-bottom: .05rem; text-decoration: underline;}body { font: 1em Go, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,'Apple Color Emoji', 'Segoe UI Emoji'; max-height: 100%; line-height: 1.4; color: #111; background: #e0dac7; margin: auto; max-width: 960px; }.item {margin-bottom: 1ch;display: grid;grid-template-columns: minmax(max-content, 24%) 1fr;}
+	<style>
+	@font-face { font-family: Go; src: url('/static/fonts/Go-Regular.ttf') format('truetype'); font-display:swap;}a, a:visited { background-image: url("/static/splat-underline-2-default.svg"); background-size: 100% 4px; background-position: bottom; background-repeat: no-repeat;color: #000;padding-bottom: .05rem; text-decoration: underline;}body { font: 1em Go, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,'Apple Color Emoji', 'Segoe UI Emoji'; max-height: 100%; line-height: 1.4; color: #111; background: #e0dac7; margin: auto; max-width: 960px; }.item {margin-bottom: 1ch;display: grid;grid-template-columns: minmax(max-content, 24%) 1fr;}
   	h1 { font-size: 2em; margin:0;}h2 { margin:1.5em 0;}hr { border:none; border-top: 1px dashed #868277; margin: 40px 0;}.link { grid-column: 2;   grid-row: 1 }.source { grid-column: 1; grid-row: 1 }.source { text-align: left; padding-right: 12px;align-self: center;}.source span {background-color: #fff;font-size: 0.8em;text-transform: uppercase;}.link {white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 	</style></head><body><main><div class="items">`
 	fmt.Print(HEADER)
