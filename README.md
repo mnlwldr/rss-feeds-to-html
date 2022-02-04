@@ -2,8 +2,7 @@
 
 Generate a HTML output from several rss feeds. 
 
-[Example input file](https://defer.cc/urls.txt)
-[Example output](https://defer.cc/rss-reader/)
+Inspired by [engineeringblogs.xyz](https://engineeringblogs.xyz/) ([GitHub](https://github.com/peterc/engblogs))
 
 # Usage 
-`go run Reader.go /path/to/file`
+`go run Reader.go urls.example > example-out.html`
